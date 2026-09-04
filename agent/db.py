@@ -3,10 +3,13 @@ item 11). Lazy-singleton pattern reused in shape from the old crypto
 codebase's database/connection.py, adapted to a single DSN (Neon gives one
 connection string) instead of discrete host/port/user/password fields."""
 import asyncio
+from pathlib import Path
 
 import asyncpg
 
 from agent.config import DATABASE_URL
+
+_SCHEMA_PATH = Path(__file__).resolve().parent.parent / "db" / "schema.sql"
 
 _pool: asyncpg.Pool | None = None
 # doc/zerodte_and_watchlist.md: the check-then-create below wasn't atomic -
@@ -48,6 +51,16 @@ async def get_pool() -> asyncpg.Pool:
                 # the decision loop's repeated freezes (doc/loop_and_ui_fixes.md).
                 command_timeout=30,
             )
+            # Self-initializing schema: every statement in db/schema.sql is
+            # written idempotent (CREATE TABLE/INDEX IF NOT EXISTS, ADD COLUMN
+            # IF NOT EXISTS), so running it here on every pool creation is a
+            # safe no-op against an already-initialized database and turns a
+            # brand new DATABASE_URL from "relation does not exist" into a
+            # working database with no manual `psql -f db/schema.sql` step.
+            # asyncpg's execute() uses the simple query protocol (not a
+            # prepared statement) when called with no bind arguments, which is
+            # what allows this one call to run the whole multi-statement file.
+            await _pool.execute(_SCHEMA_PATH.read_text())
     return _pool
 
 
