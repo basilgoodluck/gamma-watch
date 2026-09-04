@@ -170,7 +170,7 @@ Backend:
 pip install -r requirements.txt
 cp .env.example .env      # fill in ALPACA_API_KEY, ALPACA_SECRET_KEY, DATABASE_URL
 psql "$DATABASE_URL" -f db/schema.sql   # once, against a fresh database
-python -m uvicorn web_api.server:app --reload --port 8000
+python -m uvicorn web_api.server:app --reload --host 127.0.0.1 --port 8000
 ```
 
 Frontend:
