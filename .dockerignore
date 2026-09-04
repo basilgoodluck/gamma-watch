@@ -1,0 +1,17 @@
+.git/
+.venv/
+venv/
+__pycache__/
+*.pyc
+.env
+frontend/
+mcp_server/
+data/
+logs/
+db/
+doc/
+scripts/
+.claude/
+*.log
+scratch*
+README.md

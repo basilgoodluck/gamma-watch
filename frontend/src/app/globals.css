@@ -1,0 +1,120 @@
+@import "tailwindcss";
+
+/* Full blue/white theme - blue background throughout, pure white text (no
+   gray), Roboto typography. Requested directly, applied everywhere. */
+:root {
+  /* The chart is white/no border - everything outside it (header, panels,
+     modals, page background) stays dark navy. */
+  --color-chart-bg: #ffffff;
+  --color-bg: #0f2050;             /* darker navy - header, page bg */
+  --color-surface: #16295e;        /* drawer/modal cards - a touch lighter than bg for lift */
+  --color-surface-2: #1d3470;      /* hover/active rows - lighter still */
+  --color-border: rgba(255, 255, 255, 0.22);
+  --color-text: #ffffff;           /* pure white, never gray */
+  /* doc/gamma_watch_polish.md item 5: at 0.75 this read as gray/hard to read
+     against the dark navy - bumped brighter. Still white (hierarchy via
+     opacity, not a gray hue), just less of an opacity cut. */
+  --color-text-muted: rgba(255, 255, 255, 0.88);
+  --color-accent: #93c5fd;         /* bright sky-blue for links/active icons against the blue bg */
+  --color-accent-hover: #bfdbfe;
+  --color-cta-bg: #ffffff;         /* solid CTA buttons invert: white bg, blue text */
+  --color-cta-text: #1b3a8f;
+
+  /* Regime colors - brightened for legibility against a dark blue background
+     (kept off the accent's own blue hue so none of them merge with it). */
+  --color-trend-calm: #34d399;
+  --color-trend-volatile: #fb923c;
+  --color-range-calm: #c4b5fd;
+  --color-range-volatile: #f472b6;
+  --color-breakout: #fbbf24;
+
+  /* Marketing page (`/`) - same family, kept as its own tokens. */
+  --color-marketing-bg: #1b3a8f;
+  --color-marketing-text: #ffffff;
+  --color-marketing-text-muted: rgba(255, 255, 255, 0.88); /* doc/gamma_watch_polish.md item 5 */
+  --color-marketing-divider: rgba(255, 255, 255, 0.22);
+}
+
+@theme inline {
+  --color-chart-bg: var(--color-chart-bg);
+  --color-bg: var(--color-bg);
+  --color-surface: var(--color-surface);
+  --color-surface-2: var(--color-surface-2);
+  --color-border: var(--color-border);
+  --color-text: var(--color-text);
+  --color-text-muted: var(--color-text-muted);
+  --color-accent: var(--color-accent);
+  --color-accent-hover: var(--color-accent-hover);
+  --color-cta-bg: var(--color-cta-bg);
+  --color-cta-text: var(--color-cta-text);
+  --color-trend-calm: var(--color-trend-calm);
+  --color-trend-volatile: var(--color-trend-volatile);
+  --color-range-calm: var(--color-range-calm);
+  --color-range-volatile: var(--color-range-volatile);
+  --color-breakout: var(--color-breakout);
+  --color-marketing-bg: var(--color-marketing-bg);
+  --color-marketing-text: var(--color-marketing-text);
+  --color-marketing-text-muted: var(--color-marketing-text-muted);
+  --color-marketing-divider: var(--color-marketing-divider);
+  --font-sans: var(--font-roboto);
+  --font-mono: var(--font-roboto-mono);
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-roboto), ui-sans-serif, system-ui, sans-serif;
+  font-size: 16px; /* not small - the readable baseline every text-* size scales from */
+}
+
+.font-tabular {
+  font-family: var(--font-roboto-mono), ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Stylish scrollbars - thin, themed, replacing the default OS/browser chrome
+   on every scrollable panel (Firefox + WebKit). */
+.styled-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.35) transparent;
+}
+.styled-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.styled-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.styled-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+}
+.styled-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.55);
+}
+
+/* Subtle "live" pulse for the header regime badge - a soft breathing glow
+   in the badge's own color, not a distracting blink. */
+@keyframes regime-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 0 5px rgba(255, 255, 255, 0);
+  }
+}
+.regime-pulse {
+  animation: regime-pulse 2.4s ease-in-out infinite;
+}

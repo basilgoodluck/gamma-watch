@@ -1,0 +1,9 @@
+alpaca-py==0.44.0
+python-dotenv==1.2.3
+numpy==2.5.2
+pandas==3.0.5
+openai==3.6.0
+mcp==2.1.1
+fastapi==0.141.1
+uvicorn[standard]==0.52.4
+asyncpg==0.31.0

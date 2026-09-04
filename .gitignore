@@ -1,0 +1,40 @@
+# Prior crypto project kept as read-only pattern reference, not part of this repo
+quasar/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.python-version
+
+# Env
+.env
+
+# Logs (structure tracked via .gitkeep, contents are runtime data)
+logs/**/*.jsonl
+
+# Persisted runtime state (IV rank rolling history, etc.)
+data/
+
+# Node (frontend, step10)
+frontend/node_modules/
+frontend/.next/
+
+# Dev scratch, run logs, one-off debug output (not project source)
+*.log
+scratch*
+frontend/diag_*.png
+frontend/Users*
+
+# One-time archive from the jsonl -> Postgres migration
+logs/_migrated_to_postgres/
+
+# Claude Code local session state
+.claude/
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
